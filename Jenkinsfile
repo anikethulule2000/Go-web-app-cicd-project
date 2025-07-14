@@ -55,7 +55,7 @@ pipeline {
 
     stage('Update Helm Chart') {
       steps {
-        withCredentials([string(credentialsId: 'github-token', variable: 'GH_TOKEN')]) {
+        withCredentials([string(credentialsId: 'github-token', variable: 'github-token')]) {
           sh '''
             git config user.email "anikethulule7219@gmail.com"
             git config user.name "Aniket Hulule"
