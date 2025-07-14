@@ -5,6 +5,7 @@ pipeline {
     }
   environment {
     DOCKER_IMAGE = "aniket1805/go-web-app:${env.BUILD_ID}"
+    NEXUS_URL = "http://3.91.208.177:8081/repository/reports"
   }
 
   options {
@@ -73,6 +74,21 @@ pipeline {
       }
     }
   }
+  stage('Upload Reports to Nexus') {
+  steps {
+    withCredentials([usernamePassword(credentialsId: 'nexus-creds', usernameVariable: 'NEXUS_USER', passwordVariable: 'NEXUS_PASS')]) {
+      sh '''
+        curl -v -u $NEXUS_USER:$NEXUS_PASS \
+          --upload-file golangci-lint-report.json \
+          $NEXUS_URL/golangci-lint-report-${BUILD_ID}.json
+
+        curl -v -u $NEXUS_USER:$NEXUS_PASS \
+          --upload-file trivy-report.json \
+          $NEXUS_URL/trivy-report-${BUILD_ID}.json
+      '''
+    }
+  }
+}
 
 
   }
