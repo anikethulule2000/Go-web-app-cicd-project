@@ -62,7 +62,7 @@ pipeline {
             sed -i 's/tag: .*/tag: "'$BUILD_ID'"/' helm/go-web-app-chart/values.yaml
             git add helm/go-web-app-chart/values.yaml
             git commit -m "Update tag in Helm chart"
-            git push https://${GH_TOKEN}@github.com/<your-username>/<your-repo>.git HEAD:main
+            git push https://${github-token}@github.com/anikethulule2000/Go-web-app-cicd-project.git HEAD:main
           '''
         }
       }
