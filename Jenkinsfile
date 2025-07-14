@@ -52,6 +52,12 @@ pipeline {
         }
       }
     }
+    stage('Trivy Image Scan') {
+          steps {
+              sh "trivy image --format table -o image.html $DOCKER_IMAGE"
+          }
+      }
+
 
     stage('Update Helm Chart') {
     steps {
