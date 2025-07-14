@@ -1,6 +1,8 @@
 pipeline {
   agent any
-
+  tools {
+        go 'go-test'
+    }
   environment {
     DOCKER_IMAGE = "aniket1805/go-web-app:${env.BUILD_ID}"
   }
@@ -14,12 +16,6 @@ pipeline {
     stage('Checkout') {
       steps {
         checkout scm
-      }
-    }
-
-    stage('Set up Go') {
-      tools {
-        go 'Go-1.22'  // You must define this Go version under Jenkins tools
       }
     }
 
