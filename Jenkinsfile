@@ -36,7 +36,7 @@ pipeline {
         sh '''
           curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.56.2
           export PATH=$PATH:/var/lib/jenkins/go/bin
-          golangci-lint run
+          golangci-lint run --out-format json > golangci-lint-report.json
         '''
       }
     }
@@ -54,7 +54,7 @@ pipeline {
     }
     stage('Trivy Image Scan') {
           steps {
-              sh "trivy image --format table -o image.html $DOCKER_IMAGE"
+              sh "trivy image --format json --output trivy-report.json $DOCKER_IMAGE"
           }
       }
 
